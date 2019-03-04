@@ -15,6 +15,7 @@ Main >> initialize [
 { #category : #'as yet unclassified' }
 Main >> train: numIterations [
 	| strategy myAction otherAction regret individualUtility |
+	
 	1 to: numIterations do: [ :i |
 		strategy := playerOne strategy.
 		playerOne updateStrategy: strategy.
