@@ -29,9 +29,27 @@ Agent >> strategy [
 ]
 
 { #category : #'as yet unclassified' }
+Agent >> updateAndSample [
+	| strategy |
+	strategy := self strategy.
+	self updateStrategy: strategy.
+	^Action sample: strategy.
+]
+
+{ #category : #'as yet unclassified' }
 Agent >> updateRegret: regret [
 	regretSum := regretSum + regret
 
+]
+
+{ #category : #'as yet unclassified' }
+Agent >> updateRegret: myAction and: otherAction [
+	| individualUtility |
+	individualUtility := myAction vs: otherAction.
+	self
+		updateRegret:
+			(Action subclasses
+				collect: [ :a | (a vs: otherAction) - individualUtility ])
 ]
 
 { #category : #'as yet unclassified' }
