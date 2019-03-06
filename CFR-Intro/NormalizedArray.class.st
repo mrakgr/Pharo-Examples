@@ -6,17 +6,7 @@ Class {
 }
 
 { #category : #accessing }
-NormalizedArray class >> actions [ ^Action subclasses
-]
-
-{ #category : #accessing }
-NormalizedArray class >> print: normalized at: i on: aStream [
-	aStream 
-		nextPut: (self actions at: i);
-		nextPutAll: ': ';
-		nextPut: (normalized at: i);
-		nextPut: #%.
-
+NormalizedArray >> actions [ ^Action subclasses
 ]
 
 { #category : #accessing }
@@ -29,16 +19,27 @@ NormalizedArray >> normalized [
 		ifFalse: [ Array new: strategy size withAll: 1.0 / self size ]
 ]
 
+{ #category : #accessing }
+NormalizedArray >> printElem: anIndex on: aStream [
+	aStream 
+		print: (self actions at: anIndex);
+		nextPutAll: ': ';
+		print: (self normalized at: anIndex) showingDecimalPlaces: 2;
+		nextPut: $%.
+
+]
+
 { #category : #printing }
 NormalizedArray >> printOn: aStream [
 	| normalized |
-	self isEmpty ifTrue: [ '{}' printOn: aStream. ^self ].
 	normalized := self normalized.
-	aStream << ${.
-	NormalizedArray print: normalized at: 1 on: aStream.
-	2 to: self size do: [ :i |
-		aStream << ' . '.
-		NormalizedArray print: normalized at: i on: aStream.
+	aStream nextPut: ${.
+	self isEmpty ifFalse: [ 
+		normalized printElem: 1 on: aStream.
+		2 to: self size do: [ :i | 
+			aStream nextPutAll: ' . '.
+			normalized printElem: i on: aStream 
+			].
 		].
-	aStream << $}
+	aStream nextPut: $}
 ]
