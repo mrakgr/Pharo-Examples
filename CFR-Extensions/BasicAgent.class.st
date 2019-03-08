@@ -14,27 +14,35 @@ BasicAgent >> actions [
 ]
 
 { #category : #initialization }
-BasicAgent >> initialize [
-	| size |
-	super initialize.
-	size := self actions size.
-	regretSum := NormalizedArray new: size withAll: 0.0 .
-	strategySum := NormalizedArray new: size withAll: 0.0 .
+BasicAgent >> createArray [
+	| actions size |
+	actions := self actions.
+	size := actions size.
+	^ self createArray: size with: actions.
+]
 
+{ #category : #initialization }
+BasicAgent >> createArray: size with: actions [
+	^ (ActionArray new: size withAll: 0.0) actions: actions
+]
+
+{ #category : #'as yet unclassified' }
+BasicAgent >> increaseRegret: regret [
+	regretSum := regretSum + regret
 
 ]
 
 { #category : #'as yet unclassified' }
-BasicAgent >> sample: strategy [
-	| prob r |
-	r := SharedRandom globalGenerator next.
-	prob := 0.0.
-	1 to: self actions size do: [ :i |
-		prob := prob + (strategy at: i).
-		r < prob ifTrue: [^self actions at: i].
-		].
-	self error.
-	
+BasicAgent >> increaseStrategy: strategy [
+	strategySum := strategySum + strategy
+
+]
+
+{ #category : #initialization }
+BasicAgent >> initialize [
+	super initialize.
+	regretSum := self createArray.
+	strategySum := self createArray.
 ]
 
 { #category : #accessing }
@@ -46,14 +54,8 @@ BasicAgent >> strategy [
 BasicAgent >> updateAndSample [
 	| strategy |
 	strategy := self strategy.
-	self updateStrategy: strategy.
-	^self sample: strategy.
-]
-
-{ #category : #'as yet unclassified' }
-BasicAgent >> updateRegret: regret [
-	regretSum := regretSum + regret
-
+	self increaseStrategy: strategy.
+	^strategy sample.
 ]
 
 { #category : #'as yet unclassified' }
@@ -61,13 +63,7 @@ BasicAgent >> updateRegret: myAction and: otherAction [
 	| individualUtility |
 	individualUtility := myAction vs: otherAction.
 	self
-		updateRegret:
+		increaseRegret:
 			(self actions
 				collect: [ :a | (a vs: otherAction) - individualUtility ])
-]
-
-{ #category : #'as yet unclassified' }
-BasicAgent >> updateStrategy: strategy [
-	strategySum := strategySum + strategy
-
 ]

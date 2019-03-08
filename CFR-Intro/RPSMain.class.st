@@ -31,12 +31,12 @@ RPSMain >> trainVsFixed: numIterations [
 	1 to: numIterations do: [ :i |
 		| strategy myAction otherAction regret individualUtility |
 		strategy := playerOne strategy.
-		playerOne updateStrategy: strategy.
+		playerOne increaseStrategy: strategy.
 		myAction := RPSAction sample: strategy.
 		otherAction := RPSAction sample: RPSAgent fixed.
 		individualUtility := myAction vs: otherAction.
 		regret := RPSAction subclasses collect: [ :a | (a vs: otherAction) - individualUtility].
-		playerOne updateRegret: regret
+		playerOne increaseRegret: regret
 		].
 ]
 
@@ -44,7 +44,7 @@ RPSMain >> trainVsFixed: numIterations [
 RPSMain >> updateAndSample [
 	| myAction strategy |
 	strategy := playerOne strategy.
-	playerOne updateStrategy: strategy.
+	playerOne increaseStrategy: strategy.
 	myAction := RPSAction sample: strategy.
 	^ myAction
 ]

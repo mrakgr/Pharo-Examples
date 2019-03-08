@@ -12,6 +12,18 @@ Class {
 RPSAgent class >> fixed [ ^#( 0.4 0.3 0.3 )
 ]
 
+{ #category : #'as yet unclassified' }
+RPSAgent >> increaseRegret: regret [
+	regretSum := regretSum + regret
+
+]
+
+{ #category : #'as yet unclassified' }
+RPSAgent >> increaseStrategy: strategy [
+	strategySum := strategySum + strategy
+
+]
+
 { #category : #initialization }
 RPSAgent >> initialize [
 	| size |
@@ -32,14 +44,8 @@ RPSAgent >> strategy [
 RPSAgent >> updateAndSample [
 	| strategy |
 	strategy := self strategy.
-	self updateStrategy: strategy.
+	self increaseStrategy: strategy.
 	^RPSAction sample: strategy.
-]
-
-{ #category : #'as yet unclassified' }
-RPSAgent >> updateRegret: regret [
-	regretSum := regretSum + regret
-
 ]
 
 { #category : #'as yet unclassified' }
@@ -47,13 +53,7 @@ RPSAgent >> updateRegret: myAction and: otherAction [
 	| individualUtility |
 	individualUtility := myAction vs: otherAction.
 	self
-		updateRegret:
+		increaseRegret:
 			(RPSAction subclasses
 				collect: [ :a | (a vs: otherAction) - individualUtility ])
-]
-
-{ #category : #'as yet unclassified' }
-RPSAgent >> updateStrategy: strategy [
-	strategySum := strategySum + strategy
-
 ]
