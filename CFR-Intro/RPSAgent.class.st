@@ -1,5 +1,5 @@
 Class {
-	#name : #Agent,
+	#name : #RPSAgent,
 	#superclass : #Object,
 	#instVars : [
 		'regretSum',
@@ -9,51 +9,51 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-Agent class >> fixed [ ^#( 0.4 0.3 0.3 )
+RPSAgent class >> fixed [ ^#( 0.4 0.3 0.3 )
 ]
 
 { #category : #initialization }
-Agent >> initialize [
+RPSAgent >> initialize [
 	| size |
 	super initialize.
-	size := Action subclasses size.
-	regretSum := NormalizedArray new: size withAll: 0.0 .
-	strategySum := NormalizedArray new: size withAll: 0.0 .
+	size := RPSAction subclasses size.
+	regretSum := RPSNormalizedArray new: size withAll: 0.0 .
+	strategySum := RPSNormalizedArray new: size withAll: 0.0 .
 
 
 ]
 
 { #category : #accessing }
-Agent >> strategy [ 
+RPSAgent >> strategy [ 
 	^regretSum normalized.
 ]
 
 { #category : #'as yet unclassified' }
-Agent >> updateAndSample [
+RPSAgent >> updateAndSample [
 	| strategy |
 	strategy := self strategy.
 	self updateStrategy: strategy.
-	^Action sample: strategy.
+	^RPSAction sample: strategy.
 ]
 
 { #category : #'as yet unclassified' }
-Agent >> updateRegret: regret [
+RPSAgent >> updateRegret: regret [
 	regretSum := regretSum + regret
 
 ]
 
 { #category : #'as yet unclassified' }
-Agent >> updateRegret: myAction and: otherAction [
+RPSAgent >> updateRegret: myAction and: otherAction [
 	| individualUtility |
 	individualUtility := myAction vs: otherAction.
 	self
 		updateRegret:
-			(Action subclasses
+			(RPSAction subclasses
 				collect: [ :a | (a vs: otherAction) - individualUtility ])
 ]
 
 { #category : #'as yet unclassified' }
-Agent >> updateStrategy: strategy [
+RPSAgent >> updateStrategy: strategy [
 	strategySum := strategySum + strategy
 
 ]

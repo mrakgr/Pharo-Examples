@@ -1,26 +1,26 @@
 Class {
-	#name : #Paper,
-	#superclass : #Action,
+	#name : #RPSPaper,
+	#superclass : #RPSAction,
 	#category : #'CFR-Intro'
 }
 
 { #category : #'as yet unclassified' }
-Paper class >> printOn: aStream [
+RPSPaper class >> printOn: aStream [
 	aStream << 'Paper'
 ]
 
 { #category : #'as yet unclassified' }
-Paper class >> vs [ ^#vsPaper
+RPSPaper class >> vs [ ^#vsPaper
 ]
 
 { #category : #'as yet unclassified' }
-Paper class >> vsPaper [ ^self tie
+RPSPaper class >> vsPaper [ ^self tie
 ]
 
 { #category : #'as yet unclassified' }
-Paper class >> vsRock [ ^self win
+RPSPaper class >> vsRock [ ^self win
 ]
 
 { #category : #'as yet unclassified' }
-Paper class >> vsScissors [ ^self loss
+RPSPaper class >> vsScissors [ ^self loss
 ]

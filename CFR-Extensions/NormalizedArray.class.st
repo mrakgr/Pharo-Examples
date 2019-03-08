@@ -2,11 +2,12 @@ Class {
 	#name : #NormalizedArray,
 	#superclass : #Array,
 	#type : #variable,
-	#category : #'CFR-Intro'
+	#category : #'CFR-Extensions'
 }
 
-{ #category : #accessing }
-NormalizedArray >> actions [ ^Action subclasses
+{ #category : #printing }
+NormalizedArray >> gtDisplayOn: stream [
+	^ self printOn: stream
 ]
 
 { #category : #accessing }
@@ -16,15 +17,13 @@ NormalizedArray >> normalized [
 	normalizingSum := strategy sum.
 	^ normalizingSum strictlyPositive
 		ifTrue: [ strategy collect: [ :each | each / normalizingSum ] ]
-		ifFalse: [ Array new: strategy size withAll: 1.0 / self size ]
+		ifFalse: [ strategy class new: strategy size withAll: 1.0 / self size ]
 ]
 
 { #category : #accessing }
 NormalizedArray >> printElem: anIndex on: aStream [
 	aStream 
-		print: (self actions at: anIndex);
-		nextPutAll: ': ';
-		print: (self normalized at: anIndex) showingDecimalPlaces: 2;
+		print: (self at: anIndex) showingDecimalPlaces: 2;
 		nextPut: $%.
 
 ]

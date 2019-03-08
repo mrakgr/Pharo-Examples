@@ -1,5 +1,5 @@
 Class {
-	#name : #Main,
+	#name : #RPSMain,
 	#superclass : #Object,
 	#instVars : [
 		'playerOne',
@@ -9,13 +9,14 @@ Class {
 }
 
 { #category : #initialization }
-Main >> initialize [ 
-	playerOne := Agent new.
-	playerTwo := Agent new.
+RPSMain >> initialize [ 
+	super initialize.
+	playerOne := RPSAgent new.
+	playerTwo := RPSAgent new.
 ]
 
 { #category : #'as yet unclassified' }
-Main >> train: numIterations [
+RPSMain >> train: numIterations [
 	1 to: numIterations do: [ :i |
 		| actionOne actionTwo |
 		actionOne := playerOne updateAndSample.
@@ -26,24 +27,24 @@ Main >> train: numIterations [
 ]
 
 { #category : #'as yet unclassified' }
-Main >> trainVsFixed: numIterations [
+RPSMain >> trainVsFixed: numIterations [
 	1 to: numIterations do: [ :i |
 		| strategy myAction otherAction regret individualUtility |
 		strategy := playerOne strategy.
 		playerOne updateStrategy: strategy.
-		myAction := Action sample: strategy.
-		otherAction := Action sample: Agent fixed.
+		myAction := RPSAction sample: strategy.
+		otherAction := RPSAction sample: RPSAgent fixed.
 		individualUtility := myAction vs: otherAction.
-		regret := Action subclasses collect: [ :a | (a vs: otherAction) - individualUtility].
+		regret := RPSAction subclasses collect: [ :a | (a vs: otherAction) - individualUtility].
 		playerOne updateRegret: regret
 		].
 ]
 
 { #category : #'as yet unclassified' }
-Main >> updateAndSample [
+RPSMain >> updateAndSample [
 	| myAction strategy |
 	strategy := playerOne strategy.
 	playerOne updateStrategy: strategy.
-	myAction := Action sample: strategy.
+	myAction := RPSAction sample: strategy.
 	^ myAction
 ]

@@ -1,26 +1,26 @@
 Class {
-	#name : #Rock,
-	#superclass : #Action,
+	#name : #RPSRock,
+	#superclass : #RPSAction,
 	#category : #'CFR-Intro'
 }
 
 { #category : #printing }
-Rock class >> printOn: aStream [
+RPSRock class >> printOn: aStream [
 	aStream << 'Rock'
 ]
 
 { #category : #'as yet unclassified' }
-Rock class >> vs [ ^#vsRock
+RPSRock class >> vs [ ^#vsRock
 ]
 
 { #category : #'as yet unclassified' }
-Rock class >> vsPaper [ ^self loss
+RPSRock class >> vsPaper [ ^self loss
 ]
 
 { #category : #'as yet unclassified' }
-Rock class >> vsRock [ ^self tie
+RPSRock class >> vsRock [ ^self tie
 ]
 
 { #category : #'as yet unclassified' }
-Rock class >> vsScissors [ ^self win
+RPSRock class >> vsScissors [ ^self win
 ]
