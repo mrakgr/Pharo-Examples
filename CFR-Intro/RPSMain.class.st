@@ -17,7 +17,7 @@ RPSMain >> initialize [
 
 { #category : #initialization }
 RPSMain >> newAgent [
-	^ RPSAgent new actions: RPSAction subclasses
+	^ BasicAgent new: RPSAction subclasses
 ]
 
 { #category : #'as yet unclassified' }
@@ -28,19 +28,5 @@ RPSMain >> train: numIterations [
 		actionTwo := playerTwo updateAndSample.
 		playerOne updateRegret: actionOne and: actionTwo.
 		playerTwo updateRegret: actionTwo and: actionOne.
-		].
-]
-
-{ #category : #'as yet unclassified' }
-RPSMain >> trainVsFixed: numIterations [
-	1 to: numIterations do: [ :i |
-		| strategy myAction otherAction regret individualUtility |
-		strategy := playerOne strategy.
-		playerOne increaseStrategy: strategy.
-		myAction := RPSAction sample: strategy.
-		otherAction := RPSAction sample: RPSAgent fixed.
-		individualUtility := myAction vs: otherAction.
-		regret := RPSAction subclasses collect: [ :a | (a vs: otherAction) - individualUtility].
-		playerOne increaseRegret: regret
 		].
 ]

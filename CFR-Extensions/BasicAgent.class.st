@@ -3,14 +3,21 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'regretSum',
-		'strategySum'
+		'strategySum',
+		'actions'
 	],
 	#category : #'CFR-Extensions'
 }
 
 { #category : #actions }
-BasicAgent >> actions [
-	self subclassResponsibility
+BasicAgent >> actions [ ^actions
+
+]
+
+{ #category : #actions }
+BasicAgent >> actions: x [ 
+	actions := x
+
 ]
 
 { #category : #initialization }
