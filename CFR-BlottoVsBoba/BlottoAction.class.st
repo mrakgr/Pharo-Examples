@@ -12,7 +12,7 @@ BlottoAction class >> numFields: f numSoldiers: s [
 
 { #category : #'as yet unclassified' }
 BlottoAction >> vs: otherAction [
-	^(self with: otherAction collect: [ :a :b | (a - b) sign ]) sum.
+	^(self with: otherAction collect: [ :a :b | (a - b) sign ]) sum. 
 	
 
 ]
