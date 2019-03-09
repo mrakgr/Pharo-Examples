@@ -14,6 +14,11 @@ Class {
 	#category : #'CFR-Extensions'
 }
 
+{ #category : #'instance creation' }
+Agent class >> new: actions [
+	^self new actions: actions
+]
+
 { #category : #accessing }
 Agent >> actions [
 	^ actions
@@ -33,8 +38,8 @@ Agent >> createArray [
 
 { #category : #private }
 Agent >> increaseRegret: block [
-	regret size do: [ :i |
-		regret at: i add: (block value: (regret at: i))
+	1 to: regret size do: [ :i |
+		regret at: i incrementBy: (block value: (self actions at: i))
 		]
 
 
@@ -42,8 +47,8 @@ Agent >> increaseRegret: block [
 
 { #category : #private }
 Agent >> increaseStrategy: strategyNew [
-	strategy size do: [ :i |
-		strategy at: i add: (strategyNew at: i)
+	1 to: strategy size do: [ :i |
+		strategy at: i incrementBy: (strategyNew at: i)
 		]
 
 
@@ -74,7 +79,7 @@ Agent >> updateRegret: myAction and: otherAction [
 	self increaseRegret: [ :a | (a vs: otherAction) - selfUtility ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #versus }
 Agent >> vs: otherAgent [
 	| actionSelf actionOther |
 	actionSelf := self updateAndSample.
@@ -83,11 +88,16 @@ Agent >> vs: otherAgent [
 	otherAgent updateRegret: actionOther and: actionSelf.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #versus }
 Agent >> vsFixed: actionDistribution [
 	| actionSelf actionOther |
 	actionSelf := self updateAndSample.
 	actionOther := self actions sample: actionDistribution.
 	self updateRegret: actionSelf and: actionOther.
 
+]
+
+{ #category : #versus }
+Agent >> vsSelf [
+	self vs: self.
 ]

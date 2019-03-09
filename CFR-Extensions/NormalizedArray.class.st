@@ -1,3 +1,6 @@
+"
+Array for the CFR actions.
+"
 Class {
 	#name : #NormalizedArray,
 	#superclass : #Array,
