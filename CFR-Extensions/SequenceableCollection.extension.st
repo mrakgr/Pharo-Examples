@@ -13,7 +13,7 @@ SequenceableCollection >> sample: aDistribution with: probability [
 	probabilityIndex := 0.0.
 	1 to: self size do: [ :i |
 		probabilityIndex := probabilityIndex + (aDistribution at: i).
-		probability < probabilityIndex ifTrue: [^self at: i].
+		probability <= probabilityIndex ifTrue: [^self at: i].
 		].
 	self error.
 ]
