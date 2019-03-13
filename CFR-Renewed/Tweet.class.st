@@ -17,18 +17,8 @@ Tweet class >> createFromExample [
 
 { #category : #'as yet unclassified' }
 Tweet class >> createFromURL: urlAsString [
-		"Method to be defined on the CLASS side"
-		| content |
-		content := (ZnEasy get: urlAsString) contents readStream.
-		^content contents lines collect: [ :l | 
-			| firstCommaIndex secondCommaIndex |
-			firstCommaIndex := l indexOf: $,.
-			secondCommaIndex := l indexOf: $, startingAt: (firstCommaIndex + 1).
-			self new
-				sender: (l copyFrom: 1 to: (firstCommaIndex - 1));
-				date: (l copyFrom: (firstCommaIndex + 1) to: (secondCommaIndex - 1));
-				content: (l copyFrom: (secondCommaIndex + 1))
-		].
+	"Method to be defined on the CLASS side"
+	^(ZnEasy get: urlAsString) contents lines collect: [ :l | self new create: l].
 ]
 
 { #category : #accessing }
@@ -36,9 +26,13 @@ Tweet >> content [
 	^ content
 ]
 
-{ #category : #accessing }
-Tweet >> content: anObject [
-	content := anObject
+{ #category : #'as yet unclassified' }
+Tweet >> create: aString [
+	| subs |
+	subs := $, split: aString.
+	sender := subs first.
+	date := subs second.
+	content := subs third.
 ]
 
 { #category : #accessing }
@@ -46,24 +40,14 @@ Tweet >> date [
 	^ date
 ]
 
-{ #category : #accessing }
-Tweet >> date: anObject [
-	date := anObject
-]
-
 { #category : #testing }
 Tweet >> isSimilarTo: aTweet [
-			^ (self words intersection: aTweet words) size >= 6
+	^ (self words intersection: aTweet words) size >= 3
 ]
 
 { #category : #accessing }
 Tweet >> sender [
 	^ sender
-]
-
-{ #category : #accessing }
-Tweet >> sender: anObject [
-	sender := anObject
 ]
 
 { #category : #'as yet unclassified' }
