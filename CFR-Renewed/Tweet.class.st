@@ -18,21 +18,12 @@ Tweet class >> createFromExample [
 { #category : #'as yet unclassified' }
 Tweet class >> createFromURL: urlAsString [
 	"Method to be defined on the CLASS side"
-	^(ZnEasy get: urlAsString) contents lines collect: [ :l | self new create: l].
+	^(ZnEasy get: urlAsString) contents lines collect: [ :l | self new set: l].
 ]
 
 { #category : #accessing }
 Tweet >> content [
 	^ content
-]
-
-{ #category : #'as yet unclassified' }
-Tweet >> create: aString [
-	| subs |
-	subs := $, split: aString.
-	sender := subs first.
-	date := subs second.
-	content := subs third.
 ]
 
 { #category : #accessing }
@@ -48,6 +39,15 @@ Tweet >> isSimilarTo: aTweet [
 { #category : #accessing }
 Tweet >> sender [
 	^ sender
+]
+
+{ #category : #'as yet unclassified' }
+Tweet >> set: aString [
+	| subs |
+	subs := $, split: aString.
+	sender := subs first.
+	date := subs second.
+	content := subs third.
 ]
 
 { #category : #'as yet unclassified' }
