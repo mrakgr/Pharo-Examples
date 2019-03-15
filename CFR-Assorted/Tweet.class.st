@@ -6,7 +6,7 @@ Class {
 		'sender',
 		'date'
 	],
-	#category : #'CFR-Renewed'
+	#category : #'CFR-Assorted'
 }
 
 { #category : #'as yet unclassified' }
