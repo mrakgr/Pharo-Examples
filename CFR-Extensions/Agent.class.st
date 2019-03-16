@@ -16,19 +16,12 @@ Class {
 
 { #category : #'instance creation' }
 Agent class >> new: actions [
-	^self new actions: actions
+	^self new set: actions
 ]
 
 { #category : #accessing }
 Agent >> actions [
 	^ actions
-]
-
-{ #category : #creation }
-Agent >> actions: aCollection [
-	actions := aCollection.
-	regret := self createArray.
-	strategy := self createArray.
 ]
 
 { #category : #creation }
@@ -57,6 +50,13 @@ Agent >> increaseStrategy: strategyNew [
 { #category : #accessing }
 Agent >> regret [
 	^ regret normalized
+]
+
+{ #category : #creation }
+Agent >> set: aCollection [
+	actions := aCollection.
+	regret := self createArray.
+	strategy := self createArray.
 ]
 
 { #category : #accessing }
