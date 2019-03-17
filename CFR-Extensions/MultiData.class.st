@@ -21,6 +21,7 @@ MultiData >> b: anObject [
 MultiData >> initialize [
 	b := RTGrapher new.
 
+	self halt.
 	b add: (self makeD: #('hello' 1 2 1)).
 	b add: (self makeD: #('test' 1 2 11)).
 
